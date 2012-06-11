@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Net.Sockets;
+using System.Net;
 
 namespace SinZationalSockets {
     public class SinZSockets {
@@ -21,16 +22,14 @@ namespace SinZationalSockets {
             String result = Encoding.BigEndianUnicode.GetString(buffer);
 
             return result;
-
         }
 
-        public void writeString(String message) {
-            short len = (short)message.Length;
-            Console.WriteLine("String length: " + len);
-
-            byte[] bytes = new byte[message.Length * 2];
-            System.Buffer.BlockCopy(message.ToCharArray(), 0, bytes, 0, bytes.Length);
-            stream.Write(bytes, 0, bytes.Length);
+        public void writeString(String msg) {
+            short len = IPAddress.HostToNetworkOrder((short)msg.Length);
+            byte[] a = BitConverter.GetBytes(len);
+            byte[] b = Encoding.BigEndianUnicode.GetBytes(msg);
+            byte[] c = a.Concat(b).ToArray();
+            stream.Write(c, 0, c.Length);
         }
 
 
@@ -39,12 +38,9 @@ namespace SinZationalSockets {
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
         public short readShort() {
             byte a = (byte)stream.ReadByte();
-            Console.WriteLine("Short byte a: " + a);
             byte b = (byte)stream.ReadByte();
-            Console.WriteLine("Short byte b: " + b);
 
             short result = BitConverter.ToInt16(new byte[2] { a, b }, 0);
-            Console.WriteLine("Short result: " + result);
             return result;
         }
 
@@ -70,6 +66,9 @@ namespace SinZationalSockets {
         public void writeInt(int message) {
             byte[] bytes = BitConverter.GetBytes(message);
             stream.Write(bytes, 0, bytes.Length);
+            foreach(byte b in bytes) {
+                Console.Out.WriteLine(b);
+            }
         }
 
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
