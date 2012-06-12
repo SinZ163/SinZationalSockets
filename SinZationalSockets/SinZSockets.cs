@@ -40,7 +40,7 @@ namespace SinZationalSockets {
             byte a = (byte)stream.ReadByte();
             byte b = (byte)stream.ReadByte();
 
-            short result = BitConverter.ToInt16(new byte[2] { a, b }, 0);
+            short result = IPAddress.HostToNetworkOrder(BitConverter.ToInt16(new byte[2] { a, b }, 0));
             return result;
         }
 
@@ -59,7 +59,7 @@ namespace SinZationalSockets {
             byte c = (byte)stream.ReadByte();
             byte d = (byte)stream.ReadByte();
 
-            int result = BitConverter.ToInt32(new byte[4] { a, b, c, d }, 0);
+            int result = IPAddress.HostToNetworkOrder(BitConverter.ToInt32(new byte[4] { a, b, c, d }, 0));
             return result;
         }
 
@@ -82,7 +82,7 @@ namespace SinZationalSockets {
             byte g = (byte)stream.ReadByte();
             byte h = (byte)stream.ReadByte();
 
-            long result = BitConverter.ToInt64(new byte[8] { a, b, c, d, e, f, g, h}, 0);
+            long result = IPAddress.HostToNetworkOrder(BitConverter.ToInt64(new byte[8] { a, b, c, d, e, f, g, h}, 0));
             return result;
         }
 
