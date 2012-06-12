@@ -45,7 +45,7 @@ namespace SinZationalSockets {
         }
 
         public void writeShort(short message) {
-            byte[] bytes = BitConverter.GetBytes(message);
+            byte[] bytes = BitConverter.GetBytes(IPAddress.HostToNetworkOrder(message));
             stream.Write(bytes, 0, bytes.Length);
         }
 
@@ -64,11 +64,8 @@ namespace SinZationalSockets {
         }
 
         public void writeInt(int message) {
-            byte[] bytes = BitConverter.GetBytes(message);
+            byte[] bytes = BitConverter.GetBytes(IPAddress.HostToNetworkOrder(message));
             stream.Write(bytes, 0, bytes.Length);
-            foreach(byte b in bytes) {
-                Console.Out.WriteLine(b);
-            }
         }
 
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -90,7 +87,7 @@ namespace SinZationalSockets {
         }
 
         public void writeLong(long message) {
-            byte[] bytes = BitConverter.GetBytes(message);
+            byte[] bytes = BitConverter.GetBytes(IPAddress.HostToNetworkOrder(message));
             stream.Write(bytes, 0, bytes.Length);
         }
 
