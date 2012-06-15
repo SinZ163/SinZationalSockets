@@ -7,7 +7,7 @@ using System.Net;
 
 namespace SinZationalSockets {
     public class SinZSockets {
-        private NetworkStream stream;
+        public NetworkStream stream;
 
         public SinZSockets(NetworkStream stream) {
             this.stream = stream;
